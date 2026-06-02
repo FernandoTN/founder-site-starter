@@ -1,23 +1,24 @@
-# Positioning — Sprout
+# Positioning — Fernando Torres (personal site)
 
 **Status:** draft canon (locked by `DECISIONS/BDR-0001`)
 
 ## The statement
 
-> For **busy people who love plants but keep killing them**, **Sprout** is the
-> **plant-care sidekick** that **texts you the day before a plant needs care** —
-> so your plants thrive without you thinking about it. Unlike plant-care apps you
-> have to remember to open, Sprout **comes to you**.
+> For the people who want to work with or learn from me — collaborators, investors,
+> press, students — my site is the **credible, low-friction front door**: it says
+> what I'm building and lets you **book time in two clicks**. Unlike a static resume
+> or a LinkedIn page, it **works for me** — every conversation becomes a contact in
+> my own CRM.
 
 ## Load-bearing pieces
 
-- **Category:** *plant-care sidekick* (not "tracker," not "manager" — those imply
-  the user does the work).
-- **Audience:** busy, plant-loving, guilt-prone over-/under-waterers.
-- **Wedge:** proactive, one-line nudges via text. Low effort is the whole point.
-- **Contrast:** destinations you open vs. a sidekick that reaches out.
-- **First CTA:** join the waitlist. (We sell *interest* before we build features.)
+- **Identity:** founder & CEO of Memori; engineer; Stanford GSB Sloan Fellow ('26).
+- **Belief (the hook):** memory should belong to the person, not the platform —
+  *"Your AI, on your terms."*
+- **Primary action:** *book time with me.*
+- **Differentiator:** a private back office (CRM + booking inbox). The site is a
+  **tool, not a brochure**.
 
 ## The one line
 
-**"Keep your plants alive without thinking about it."**
+**"I'm building memory that belongs to you — not the platform."**

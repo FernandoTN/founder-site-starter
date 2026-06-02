@@ -1,83 +1,76 @@
-"use client";
-
-import { useState, type FormEvent } from "react";
-
-type State = "idle" | "loading" | "done" | "error";
+import Link from "next/link";
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [state, setState] = useState<State>("idle");
-  const [message, setMessage] = useState("");
-  const [count, setCount] = useState<number | null>(null);
-
-  async function submit(e: FormEvent) {
-    e.preventDefault();
-    setState("loading");
-    setMessage("");
-    try {
-      const res = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = await res.json();
-      if (res.ok && data.ok) {
-        setState("done");
-        setCount(typeof data.count === "number" ? data.count : null);
-      } else {
-        setState("error");
-        setMessage(data.error ?? "Something went wrong. Try again.");
-      }
-    } catch {
-      setState("error");
-      setMessage("Network error. Try again.");
-    }
-  }
-
   return (
-    <main className="wrap">
-      <div className="card">
-        <div className="leaf" aria-hidden="true">🌿</div>
-        <h1>Keep your plants alive without thinking about it.</h1>
-        <p className="sub">
-          Sprout is the plant-care sidekick that texts you the day before each
-          plant needs care. One tap, done.
-        </p>
+    <>
+      <div className="wrap">
+        <nav className="nav">
+          <span className="brand">Fernando Torres</span>
+          <span className="links">
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <Link href="/book">Book</Link>
+          </span>
+        </nav>
 
-        {state === "done" ? (
-          <div className="success">
-            <strong>You&rsquo;re on the list 🌿</strong>
-            <span>
-              We&rsquo;ll text you when Sprout is ready
-              {count !== null ? <> — you&rsquo;re <b>#{count}</b>.</> : "."}
-            </span>
+        <header className="hero">
+          <div className="eyebrow">Founder &amp; CEO, Memori</div>
+          <h1>I&apos;m building memory that belongs to you — not the platform.</h1>
+          <p className="lede">Your AI, on your terms.</p>
+          <div className="btn-row">
+            <Link className="btn" href="/book">Book time with me</Link>
+            <a className="btn ghost" href="#work">See what I&apos;m building</a>
           </div>
-        ) : (
-          <form onSubmit={submit} className="form">
-            <input
-              type="email"
-              required
-              placeholder="you@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              aria-label="Email address"
-            />
-            <button type="submit" disabled={state === "loading"}>
-              {state === "loading" ? "Joining…" : "Join the waitlist"}
-            </button>
-          </form>
-        )}
-
-        {state === "error" && <p className="error">{message}</p>}
-
-        <ul className="how">
-          <li><b>1.</b> Tell Sprout your plants.</li>
-          <li><b>2.</b> Get a heads-up by text the day before a care day.</li>
-          <li><b>3.</b> One tap to mark it done. No app to open.</li>
-        </ul>
-
-        <p className="foot">Free to join. We&rsquo;ll text you the moment it&rsquo;s ready.</p>
+        </header>
       </div>
-    </main>
+
+      <div className="wrap">
+        <section className="block" id="about">
+          <h2>About</h2>
+          <div className="prose">
+            <p>
+              I&apos;m a founder and engineer building <strong>Memori</strong>, the
+              personal memory profile for AI — the notes and knowledge you already
+              capture become editable Mems you control, brought into the AI tools
+              you already use.
+            </p>
+            <p>
+              I&apos;m a Stanford GSB Sloan Fellow (MSx &rsquo;26). I care about making
+              powerful technology personal without making people powerless.
+              {" "}
+              <span className="ph">[ add: previous roles, a sentence of story ]</span>
+            </p>
+          </div>
+        </section>
+
+        <section className="block" id="work">
+          <h2>Work</h2>
+          <p className="sub">A few things I&apos;m proud of.</p>
+          <div className="grid">
+            <div className="card">
+              <h3>Memori</h3>
+              <p>The personal memory profile for AI. Your memory should belong to you, not the model.</p>
+            </div>
+            <div className="card">
+              <h3>Writing &amp; talks</h3>
+              <p><span className="ph">[ add links to essays, decks, or this very workshop ]</span></p>
+            </div>
+            <div className="card">
+              <h3>Previously</h3>
+              <p><span className="ph">[ add a past company or project ]</span></p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div className="wrap">
+        <footer>
+          <span>© 2026 Fernando Torres</span>
+          <span>
+            <Link href="/book">Book time</Link> · <Link href="/login">Admin</Link>
+          </span>
+        </footer>
+      </div>
+    </>
   );
 }

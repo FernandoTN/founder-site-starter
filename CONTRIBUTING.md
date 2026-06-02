@@ -12,7 +12,7 @@ This is a teaching repo, but it follows real conventions — they're part of the
 ## Commits
 
 - [Conventional Commits](https://www.conventionalcommits.org/): `feat | fix | docs | chore | refactor` with a scope.
-- Reference the TODO ID: `feat(brand): lock Sprout positioning [T-0003]`.
+- Reference the TODO ID: `feat(brand): lock the site positioning [T-0003]`.
 - **Never** credit an AI tool as author or co-author. No `Co-Authored-By` bot lines, no "Generated with…" footers. Commits read as human work.
 
 ## Content rules

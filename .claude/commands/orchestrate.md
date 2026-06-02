@@ -1,63 +1,54 @@
 ---
-description: Drive one TODO from the ledger to Done, planning parallel vs sequential work
+description: Drive ONE TODO item through plan → research → canon → build → ship
 ---
 
-You are the **Orchestrator** for the Sprout repo. You drive ONE item from
-`TODO.md` to Done by planning it, then coordinating focused agents — some in
-parallel, some sequential. This is a **demo-tuned, lightweight** version of a
-production orchestrator: readable over exhaustive.
+You are the **Orchestrator** for this repo. Argument: `$ARGUMENTS` (a TODO ID;
+defaults to the item in *Now*, i.e. `T-0001-SITE-LAUNCH`).
 
-## Input
-
-Target item: `$ARGUMENTS` (e.g. `T-0001-SPROUT-LAUNCH`). If empty, take the first
-item in `TODO.md` *Now*.
+You coordinate; you don't do the deep work yourself. Announce the plan before each
+phase, and update `TODO.md` as you go.
 
 ## Phase 0 — Claim
+Read `TODO.md`, find the item, move it **Now → In Progress**. Read `CLAUDE.md` and
+`core/idea.md` for context.
 
-1. Read `TODO.md` and `CLAUDE.md`.
-2. Move the target item from *Now* to *In Progress* (edit `TODO.md`).
-3. Read `core/idea.md` for context.
+## Phase 1 — Classify + plan
+Classify the work: **Micro** (≤2 files), **Standard** (3–10), **Complex** (10+ or
+multi-surface). `T-0001` is **Complex**. Write `docs/plans/T-0001.md` with: scope,
+the decomposition below, and a **parallelization map** (what's independent vs.
+dependent). Add child items `T-0002…T-0006` to the ledger.
 
-## Phase 1 — Plan (sequential)
+## Phase 2 — Research *(PARALLEL — independent)*
+Three workers at once, each writing one file to `docs/research/`: a scan of great
+founder sites, an information-architecture + content plan, and an audience-&-goals
+read. Either spawn three sub-agents, or print these for the presenter to run live:
+```
+claude --bg --name site-scan   "Read core/idea.md. Scan 5 great founder/personal sites; what they do well; write docs/research/site-inspiration-scan.md."
+claude --bg --name ia-plan      "Read core/idea.md. Propose the site's information architecture + per-section content plan; write docs/research/ia-and-content-plan.md."
+claude --bg --name audience     "Read core/idea.md. Who visits a founder's site (recruiters, investors, press, collaborators) and what each wants; write docs/research/audience-and-goals.md."
+```
 
-Classify the task (Micro / Standard / **Complex**) and write a short plan that
-decomposes it into work units. For `T-0001`, the plan is:
+## Phase 3 — Identity canon *(SEQUENTIAL — needs all of Phase 2)*
+One worker synthesizes `brand/positioning.md`, `voice-and-tone.md`,
+`product-vocabulary.md`, and `proof-points.md` (the **true, sourced** claims about
+the owner), and writes a decision record in `DECISIONS/`.
 
-| Unit | Mode | Depends on | Output |
-|---|---|---|---|
-| T-0002 Research | **parallel** (3 agents) | — | `docs/research/*.md` |
-| T-0003 Brand canon + BDR | sequential | T-0002 | `brand/*.md`, `DECISIONS/BDR-0001-*.md` |
-| T-0004 Landing copy | sequential | T-0003 | `brand/landing-copy.md` |
-| T-0005 Build page | **parallel** (worktrees) | T-0004 | `web/` |
-| T-0006 Verify + ship | sequential | T-0005 | live URL + DB row |
+## Phase 4 — Site copy *(SEQUENTIAL — needs Phase 3)*
+One worker writes `brand/site-copy.md`. **Every claim about the owner must trace to
+a row in `brand/proof-points.md`.**
 
-Add T-0002…T-0006 to *Next* with their `depends on` notes. **Announce the plan**
-and explicitly say *why* each unit is parallel (independent breadth) or sequential
-(needs the previous output).
+## Phase 5 — Build *(PARALLEL — four worktrees, the headline)*
+Four units, each owning different files, so they run in parallel git worktrees and
+merge. Print these for the presenter, or spawn four sub-agents:
+- **5a public site + design** → `web/app/page.tsx`, `layout.tsx`, `globals.css`
+- **5b booking flow** → `web/app/book/`, `web/app/api/book/`, `web/lib/slots.ts`
+- **5c CRM + inbox** → `web/app/admin/`
+- **5d auth gate + data layer** → `web/middleware.ts`, `web/lib/db.ts`, `web/app/api/login|logout/`
 
-## Phase 2 — Execute, updating the ledger as you go
+## Phase 6 — Verify + ship *(SEQUENTIAL)*
+Run `/checkImplement claims` — catch any public claim that doesn't trace to
+`proof-points.md`. Optional second-model review. Then deploy per `web/README.md`.
 
-- **T-0002 (parallel):** the three research jobs are independent — they should run
-  as separate focused sessions, each given ONLY `core/idea.md`. Suggest the exact
-  commands (see `COMMANDS.md` §1) so the presenter can dispatch them as background
-  sessions and watch them on `claude agents`. Each writes one file to
-  `docs/research/`.
-- **T-0003 (sequential):** in a fresh session, read the three briefs and write the
-  canon (`positioning.md`, `voice-and-tone.md`, `product-vocabulary.md`,
-  `proof-points.md`) + a BDR locking the name and category.
-- **T-0004 (sequential):** turn the canon into `brand/landing-copy.md`. **Every
-  claim must trace to a row in `brand/proof-points.md`** — no unsourced stats.
-- **T-0005 (parallel via worktrees):** build the page in `web/` from the copy.
-- **T-0006 (sequential):** run a verification pass (does every claim trace to a
-  proof-point? any scope creep?), optionally a second-model review, then ship per
-  `web/README.md`.
-
-After each unit, move its item to *Done* in `TODO.md`.
-
-## Rules
-
-- Right context at the right step: give each agent only the files it needs.
-- Record decisions as BDRs. Use the canonical vocabulary.
-- Commit per `CLAUDE.md` (Conventional Commits; no AI co-author lines).
-- If a live agent stalls, the deterministic fallbacks in `prebake/` exist — but
-  prefer real output when it's flowing.
+## Never do live
+Do **not** wire up the deferred items: `T-0007` Google Calendar OAuth or `T-0008`
+multi-user auth. They stay in *Next* — that restraint is part of the lesson.

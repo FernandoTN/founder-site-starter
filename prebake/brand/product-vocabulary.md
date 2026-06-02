@@ -1,21 +1,19 @@
-# Product vocabulary — Sprout
+# Site vocabulary — Fernando
 
 **Status:** draft canon
 
-The canonical words. Use these exact terms everywhere; consistency is how a small
-brand feels trustworthy.
+The canonical words. Consistency is how a small personal brand feels intentional.
 
 | Use | Not | Why |
 |---|---|---|
-| **Sprout** | "the app," "the platform" | It has a name. Use it. |
-| **sidekick** | "tracker," "manager," "tool" | Implies it works *for* you, low effort. |
-| **nudge** / **a heads-up** | "notification," "alert" | Friendly, not alarming. |
-| **care day** | "watering task," "to-do" | Care is broader than water; warmer than "task." |
-| **join the waitlist** | "sign up," "register" | Honest: we're pre-launch. |
-| **your plants** | "your inventory," "your collection" | They're alive, not stock. |
+| **Book time with me** | "Schedule a meeting" / "Contact" | Warmer, specific, one clear action |
+| **Booking inbox** | "Leads" / "Submissions" | They're people, not tickets |
+| **CRM · Rolodex** | "Contacts table" / "Database" | Human and memorable |
+| **Work** | "Portfolio" / "Projects" | Plain |
+| **Memori — the personal memory profile for AI** | "second brain" / "AI assistant" | Memori's canonical category |
 
 ## Avoid → use
 
-- *"Never kill a plant again"* → *"Keep your plants alive without thinking about it."*
-- *"AI-powered plant management"* → *"texts you the day before each plant needs care."*
-- *"Comprehensive care dashboard"* → *"one line, one tap, done."*
+- *"Award-winning founder"* → just show the work.
+- *"Trusted by thousands"* → don't claim numbers you can't source (see `proof-points.md`).
+- *"Serial entrepreneur"* → name the actual things you've built.
