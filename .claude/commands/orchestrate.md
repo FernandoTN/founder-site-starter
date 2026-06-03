@@ -1534,7 +1534,7 @@ Claude Code's Bash tool max timeout is 600000 ms (10 min). A thorough codex revi
 
 ### Sibling skills using this pattern
 
-`codexReview.md` and `orchestrate-codex.md` already follow this pattern. If the pattern changes, update all three skills (this section, `codexReview.md`, `orchestrate-codex.md`) together.
+`orchestrate-codex.md` already follows this pattern. If the pattern changes, update both skills (this section and `orchestrate-codex.md`) together.
 
 ---
 
@@ -1555,5 +1555,5 @@ Claude Code's Bash tool max timeout is 600000 ms (10 min). A thorough codex revi
 13. **Codex failure is non-blocking but visible** — Detected by the orchestrator inspecting the codex exit code, stderr, and result file after the completion notification (NOT by a subagent reporting `CODEX_FAILED`). If codex returns non-zero, times out (exit 124), or the result file is missing/empty after one retry, the pipeline proceeds with checkImplement + Claude tracks only. The report MUST prominently flag the failure with a warning.
 14. **No Codex fix phase in orchestrate** — Codex runs read-only within the pipeline. All fixes go through the orchestrator's fixer pattern (spawn a fixer subagent/teammate to fix the issue) so there is one fix-verify loop, not two.
 15. **Codex findings deduplication** — Before triaging Codex findings, cross-reference against: (a) all checkImplement issues (found), (b) all issues already fixed by checkImplement fixers. Use dedup criteria: exact match (same file + line + category) → near match (same file, lines within 5, same category) → semantic overlap (same root cause). Only net-new issues enter the fixer pipeline.
-16. **Codex fast-mode policy** — Every `codex exec` invocation in this skill passes `-c 'service_tier="fast"'` to route through the fast service tier (~1.5× speed for 2× credits). Requires ChatGPT-plan login and gpt-5.5; with an API-key session the override is accepted but silently not honored. Do not remove the flag per-call; if the policy changes, update both call sites in this file (Standard S.3 and Complex C.4) together with this bullet. The parallel rules in `orchestrate-codex.md` §7a and `codexReview.md` §8a govern those skills independently and must be updated there too.
+16. **Codex fast-mode policy** — Every `codex exec` invocation in this skill passes `-c 'service_tier="fast"'` to route through the fast service tier (~1.5× speed for 2× credits). Requires ChatGPT-plan login and gpt-5.5; with an API-key session the override is accepted but silently not honored. Do not remove the flag per-call; if the policy changes, update both call sites in this file (Standard S.3 and Complex C.4) together with this bullet. The parallel rules in `orchestrate-codex.md` §7a govern that skill independently and must be updated there too.
 17. **Sub-skill returns are not pipeline returns.** Each of `makePlan`, `reviewPlan`, `implement`, `checkImplement` ends with a "Phase Complete — Control returns to caller" marker; each Complex teammate ends its work with a `SendMessage` report. None of those signal pipeline completion. The pipeline terminates only when §Shared: Stopping Rules' four conditions all hold.
