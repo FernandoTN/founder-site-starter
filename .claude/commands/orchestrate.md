@@ -115,7 +115,7 @@ When ambiguous, prefer **Standard** over Micro (safe default).
    c. If `codex` is not installed OR not authenticated:
       - Set `{CODEX_AVAILABLE}` = false
       - Set `{CODEX_SKIP_REASON}` = "codex CLI unavailable or unauthenticated — review proceeds with Claude-only tracks"
-      - **Do NOT escalate to the user.** Proceed. The verify phase falls back to checkImplement + the Track B Claude deep-dive only. The final report will prominently flag that Codex was skipped so the user can optionally run `/codexReview {TODO_ID}` manually after merge. This is expected behavior for contributors who haven't set up Codex CLI.
+      - **Do NOT escalate to the user.** Proceed. The verify phase falls back to checkImplement + the Track B Claude deep-dive only. The final report will prominently flag that Codex was skipped. This is expected behavior for contributors who haven't set up Codex CLI.
 
    d. If available and authenticated: set `{CODEX_AVAILABLE}` = true.
 
@@ -626,7 +626,6 @@ Otherwise, apply the **Shared: Merge Finalize** procedure:
 ### ⚠ Codex Review Warning
 Codex review {could not complete / was skipped}. Reason: {CODEX_SKIP_REASON or error}.
 This implementation was reviewed by checkImplement only.
-Consider running `/codexReview {TODO_ID}` manually after merge.
 
 ### Changes
 - {key files changed}
@@ -1178,7 +1177,6 @@ Otherwise, apply the **Shared: Merge Finalize** procedure:
 ### ⚠ Codex Review Warning
 Codex review {could not complete / was skipped}. Reason: {CODEX_SKIP_REASON or error}.
 This implementation was reviewed by checkImplement only.
-Consider running `/codexReview {TODO_ID}` manually after merge.
 
 ### Changes
 - Files changed: {count}
@@ -1554,7 +1552,7 @@ Claude Code's Bash tool max timeout is 600000 ms (10 min). A thorough codex revi
 10. **Documentation classification** — The docs checker classifies `docs/reference/` as CRITICAL (must fix before finalize) and `docs/project-context/` as NOTE (logged to DOC_CHANGELOG for batch update).
 11. **Codex review is best-effort** — Every Standard and Complex pipeline ATTEMPTS Codex review. If Codex CLI is unavailable or unauthenticated, proceed with the Claude-only review track (Track B consistency) and prominently flag the skip in the final report. Do NOT escalate to user for missing Codex — this is expected behavior for contributors who have not set up Codex CLI.
 12. **Fire Codex first, integrate late** — Codex fires as a direct `run_in_background` Bash call from the orchestrator (NOT inside a subagent or teammate — see **Shared: Codex Background-Run Discipline** for the failure mode). The Claude consistency track (B, optionally F) runs as a parallel subagent (Standard) or teammate (Complex). checkImplement runs in foreground and its findings are triaged first. When the codex completion notification arrives, the orchestrator reads `/tmp/codex-result-{REVIEW_ID}.json` directly, combines with the Claude track's response, and cross-references against checkImplement found+fixed sets. Only NET NEW critical/major issues trigger additional fixers.
-13. **Codex failure is non-blocking but visible** — Detected by the orchestrator inspecting the codex exit code, stderr, and result file after the completion notification (NOT by a subagent reporting `CODEX_FAILED`). If codex returns non-zero, times out (exit 124), or the result file is missing/empty after one retry, the pipeline proceeds with checkImplement + Claude tracks only. The report MUST prominently flag the failure with a warning and suggest running `/codexReview {TODO_ID}` manually post-merge.
+13. **Codex failure is non-blocking but visible** — Detected by the orchestrator inspecting the codex exit code, stderr, and result file after the completion notification (NOT by a subagent reporting `CODEX_FAILED`). If codex returns non-zero, times out (exit 124), or the result file is missing/empty after one retry, the pipeline proceeds with checkImplement + Claude tracks only. The report MUST prominently flag the failure with a warning.
 14. **No Codex fix phase in orchestrate** — Codex runs read-only within the pipeline. All fixes go through the orchestrator's fixer pattern (spawn a fixer subagent/teammate to fix the issue) so there is one fix-verify loop, not two.
 15. **Codex findings deduplication** — Before triaging Codex findings, cross-reference against: (a) all checkImplement issues (found), (b) all issues already fixed by checkImplement fixers. Use dedup criteria: exact match (same file + line + category) → near match (same file, lines within 5, same category) → semantic overlap (same root cause). Only net-new issues enter the fixer pipeline.
 16. **Codex fast-mode policy** — Every `codex exec` invocation in this skill passes `-c 'service_tier="fast"'` to route through the fast service tier (~1.5× speed for 2× credits). Requires ChatGPT-plan login and gpt-5.5; with an API-key session the override is accepted but silently not honored. Do not remove the flag per-call; if the policy changes, update both call sites in this file (Standard S.3 and Complex C.4) together with this bullet. The parallel rules in `orchestrate-codex.md` §7a and `codexReview.md` §8a govern those skills independently and must be updated there too.
