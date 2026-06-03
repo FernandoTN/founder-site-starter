@@ -44,7 +44,7 @@ async function main() {
       { text: "Run a team of AI agents.", options: { breakLine: true, color: PAPER } },
       { text: "Not a chat.", options: { color: INDIGO } },
     ], { x: MX, y: 2.2, w: 11.5, h: 2.2, fontFace: SERIF, fontSize: 58, bold: true, lineSpacingMultiple: 0.98, margin: 0 });
-    s.addText("From one idea to a live personal site — with a private CRM — in an hour.", { x: MX, y: 4.7, w: 10.5, h: 0.6, fontFace: SANS, fontSize: 20, color: LAVTXT, margin: 0 });
+    s.addText("From a one-line idea to finished work — a team of agents on a single source of truth.", { x: MX, y: 4.7, w: 11.8, h: 0.6, fontFace: SANS, fontSize: 20, color: LAVTXT, margin: 0 });
     // motif: four parallel agent squares
     for (let i = 0; i < 4; i++) {
       s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 9.9 + i * 0.62, y: 0.55, w: 0.45, h: 0.45, rectRadius: 0.06, fill: { color: i === 0 ? INDIGO : INDIGO_DK }, line: { color: INDIGO, width: 1 } });
@@ -83,9 +83,9 @@ async function main() {
     tag(s, "02 — what you'll watch");
     title(s, "In the next ~50 minutes");
     const items = [
-      ["1", "idea", "typed in 15 seconds"],
-      ["~6", "agents", "research + build, in parallel"],
-      ["1", "live URL", "real site + real database"],
+      ["1", "idea", "→ a spec, in minutes"],
+      ["~6", "agents", "plan + build, in parallel"],
+      ["1", "ledger", "every task driven to done"],
     ];
     items.forEach((it, i) => {
       const x = MX + i * 4.15;
@@ -129,9 +129,9 @@ async function main() {
     tag(s, "04 — the ledger");
     title(s, "TODO.md is the spine");
     const cols = [
-      ["NOW", [["T-0001 Site launch", INDIGO, PAPER]]],
+      ["NOW", [["T-0001 First task", INDIGO, PAPER]]],
       ["IN PROGRESS", [["T-0005 Build", LAV, INDIGO_DK]]],
-      ["NEXT", [["T-0007 Calendar sync", PAPER, MUTED], ["T-0008 Multi-user", PAPER, MUTED], ["T-0009 Booking email", PAPER, MUTED]]],
+      ["NEXT", [["T-0007 Integration", PAPER, MUTED], ["T-0008 Polish", PAPER, MUTED], ["T-0009 Docs", PAPER, MUTED]]],
       ["DONE", [["T-0002 Research", GREEN_BG, GREEN], ["T-0003 Spec", GREEN_BG, GREEN], ["T-0004 Todo", GREEN_BG, GREEN]]],
     ];
     cols.forEach((c, i) => {
@@ -294,7 +294,7 @@ async function main() {
   {
     const s = pres.addSlide(); s.background = { color: PAPER };
     tag(s, "09 — take it home");
-    title(s, "Clone it. Point it at yourself.");
+    title(s, "Clone it. Point it at any project.");
     let qr;
     try { qr = await QRCode.toDataURL("https://github.com/FernandoTN/founder-site-starter", { margin: 1, width: 600, color: { dark: "#17151F", light: "#FFFFFF" } }); } catch (e) { qr = null; }
     if (qr) s.addImage({ data: qr.replace(/^data:/, ""), x: MX, y: 2.4, w: 2.7, h: 2.7 });
@@ -302,8 +302,8 @@ async function main() {
     s.addText("github.com/FernandoTN/founder-site-starter", { x: 3.9, y: 2.7, w: 8.6, h: 0.7, fontFace: MONO, fontSize: 17, color: INDIGO_DK, bold: true, valign: "middle", margin: 0 });
     s.addText([
       { text: "Inside: ", options: { bold: true, color: INK } },
-      { text: "the ledger, the run-sheet, the command cheat-sheet, the deploy steps, and the whole Next.js + database app — ready to fork.", options: { color: INKSOFT } },
-    ], { x: 3.7, y: 3.7, w: 9.0, h: 1.0, fontFace: SANS, fontSize: 16, margin: 0, lineSpacingMultiple: 1.15 });
+      { text: "the /orchestrate skill chain, the TODO.md ledger, and a docs + core-context scaffold — a reusable boilerplate you point at any project, code or not.", options: { color: INKSOFT } },
+    ], { x: 3.7, y: 3.7, w: 9.0, h: 1.3, fontFace: SANS, fontSize: 16, margin: 0, lineSpacingMultiple: 1.15 });
     s.addText([
       { text: "No terminal? ", options: { bold: true, color: INDIGO_DK } },
       { text: "Use the Claude app — a fresh chat per task.    ", options: { color: INKSOFT } },
@@ -319,8 +319,8 @@ async function main() {
     for (let i = 0; i < 4; i++) s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: MX + i * 0.62, y: 0.6, w: 0.45, h: 0.45, rectRadius: 0.06, fill: { color: i === 0 ? INDIGO : INDIGO_DK }, line: { color: INDIGO, width: 1 } });
     s.addText("Thank you.", { x: MX, y: 2.4, w: 12, h: 1.2, fontFace: SERIF, fontSize: 56, color: PAPER, bold: true, margin: 0 });
     s.addText([
-      { text: "Questions — and then, fittingly: ", options: { color: LAVTXT } },
-      { text: "book time with me.", options: { color: INDIGO, bold: true } },
+      { text: "Questions — then go point it at ", options: { color: LAVTXT } },
+      { text: "your own project.", options: { color: INDIGO, bold: true } },
     ], { x: MX, y: 3.9, w: 12, h: 0.6, fontFace: SANS, fontSize: 22, margin: 0 });
     s.addText("Fernando Torres — Founder & CEO, Memori", { x: MX, y: 6.3, w: 11, h: 0.4, fontFace: SANS, fontSize: 15, color: PAPER, bold: true, margin: 0 });
     s.addText("github.com/FernandoTN/founder-site-starter", { x: MX, y: 6.7, w: 11, h: 0.3, fontFace: MONO, fontSize: 12, color: INDIGO, margin: 0 });
