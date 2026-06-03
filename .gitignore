@@ -1,25 +1,19 @@
-# TypeScript (Next.js auto-generates these)
-next-env.d.ts
-*.tsbuildinfo
+# Orchestrator runtime workspace (Complex tier) — never committed
+docs/plans/.workspace/
+
+# Claude Code worktrees (created at run time)
+.claude/worktrees/
 
 # Dependencies / build
 node_modules/
-web/node_modules/
-web/.next/
-web/out/
+.next/
+out/
 .vercel/
-web/.vercel/
 
 # Env (never commit secrets)
 .env
 .env.local
 .env*.local
-web/.env
-web/.env.local
-web/.env*.local
-
-# Claude Code worktrees (created at demo time)
-.claude/worktrees/
 
 # OS / editor
 .DS_Store
