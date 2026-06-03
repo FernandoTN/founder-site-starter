@@ -1,8 +1,21 @@
 # Project Guide (CLAUDE.md)
 
-> How an AI agent should behave in this repo. These instructions steer the
-> `/orchestrate` skill chain and every sub-skill it nests
-> (`makePlan` → `reviewPlan` → `implement` → `checkImplement`), plus `/deepResearch`.
+> How an AI agent should behave in this repo — a reusable boilerplate for driving
+> **any** project. These instructions steer the `/orchestrate` skill chain and every
+> sub-skill it nests (`makePlan` → `reviewPlan` → `implement` → `checkImplement`),
+> plus `/deepResearch`.
+
+## Core context (read these first)
+
+Ground every task in the project's source of truth before acting:
+
+- [`core/idea.md`](core/idea.md) — the project's seed idea / brief.
+- [`README.md`](README.md) — what this project is and how it's run.
+- [`TODO.md`](TODO.md) — the active ledger of work.
+
+Add your own context files under `core/` (or `docs/`) and **link them here** so every
+agent picks them up automatically. This file and the `README.md` are where you wire
+your core context into the pipeline.
 
 ## The method (follow it)
 
